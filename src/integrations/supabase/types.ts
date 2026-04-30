@@ -14,7 +14,89 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      law_summaries: {
+        Row: {
+          created_at: string
+          law_id: string
+          model: string
+          summary_md: string
+        }
+        Insert: {
+          created_at?: string
+          law_id: string
+          model: string
+          summary_md: string
+        }
+        Update: {
+          created_at?: string
+          law_id?: string
+          model?: string
+          summary_md?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "law_summaries_law_id_fkey"
+            columns: ["law_id"]
+            isOneToOne: true
+            referencedRelation: "laws"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      laws: {
+        Row: {
+          areas: string[]
+          created_at: string
+          description: string
+          id: string
+          identifier: string
+          link_gazzetta: string | null
+          link_normattiva: string | null
+          link_normattiva_label: string | null
+          link_pdf: string | null
+          nota_operativa: string | null
+          situazione: string | null
+          sort_order: number
+          status: string
+          title: string
+          year: number
+        }
+        Insert: {
+          areas?: string[]
+          created_at?: string
+          description: string
+          id?: string
+          identifier: string
+          link_gazzetta?: string | null
+          link_normattiva?: string | null
+          link_normattiva_label?: string | null
+          link_pdf?: string | null
+          nota_operativa?: string | null
+          situazione?: string | null
+          sort_order?: number
+          status: string
+          title: string
+          year: number
+        }
+        Update: {
+          areas?: string[]
+          created_at?: string
+          description?: string
+          id?: string
+          identifier?: string
+          link_gazzetta?: string | null
+          link_normattiva?: string | null
+          link_normattiva_label?: string | null
+          link_pdf?: string | null
+          nota_operativa?: string | null
+          situazione?: string | null
+          sort_order?: number
+          status?: string
+          title?: string
+          year?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
