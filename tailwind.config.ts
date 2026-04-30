@@ -38,6 +38,21 @@ export default {
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
+          soft: "hsl(var(--accent-soft))",
+        },
+        status: {
+          vigente: "hsl(var(--status-vigente))",
+          "vigente-bg": "hsl(var(--status-vigente-bg))",
+          modificata: "hsl(var(--status-modificata))",
+          "modificata-bg": "hsl(var(--status-modificata-bg))",
+          attuazione: "hsl(var(--status-attuazione))",
+          "attuazione-bg": "hsl(var(--status-attuazione-bg))",
+        },
+        hero: {
+          DEFAULT: "hsl(var(--hero-bg))",
+          fg: "hsl(var(--hero-fg))",
+          muted: "hsl(var(--hero-muted))",
+          accent: "hsl(var(--hero-accent))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
