@@ -2,95 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* LexAbilis – Editorial institutional design system
+   All colors HSL. */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Surfaces */
+    --background: 38 30% 96%;          /* warm paper */
+    --foreground: 220 25% 12%;         /* deep ink */
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 25% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 25% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary = ink */
+    --primary: 220 25% 12%;
+    --primary-foreground: 38 30% 96%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary = warm cream */
+    --secondary: 38 25% 90%;
+    --secondary-foreground: 220 25% 12%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 38 20% 92%;
+    --muted-foreground: 220 12% 40%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent = terracotta (sober gold-red) */
+    --accent: 14 65% 48%;
+    --accent-foreground: 38 30% 96%;
+    --accent-soft: 14 65% 95%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 38 30% 96%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 38 15% 85%;
+    --input: 38 15% 85%;
+    --ring: 14 65% 48%;
 
-    --radius: 0.5rem;
+    /* Status colors (legenda) */
+    --status-vigente: 142 55% 35%;
+    --status-vigente-bg: 142 50% 94%;
+    --status-modificata: 32 85% 45%;
+    --status-modificata-bg: 32 80% 94%;
+    --status-attuazione: 215 75% 45%;
+    --status-attuazione-bg: 215 70% 95%;
 
-    --sidebar-background: 0 0% 98%;
+    /* Hero */
+    --hero-bg: 220 30% 10%;
+    --hero-fg: 38 30% 96%;
+    --hero-muted: 220 12% 65%;
+    --hero-accent: 38 60% 65%;          /* warm gold */
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --radius: 0.625rem;
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 38 30% 96%;
+    --sidebar-foreground: 220 25% 12%;
+    --sidebar-primary: 220 25% 12%;
+    --sidebar-primary-foreground: 38 30% 96%;
+    --sidebar-accent: 38 25% 90%;
+    --sidebar-accent-foreground: 220 25% 12%;
+    --sidebar-border: 38 15% 85%;
+    --sidebar-ring: 14 65% 48%;
   }
 }
 
@@ -98,8 +73,37 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
   }
+  h1, h2, h3, .font-serif {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+}
+
+@layer utilities {
+  .hero-grid {
+    background-image:
+      linear-gradient(hsl(var(--hero-fg) / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--hero-fg) / 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-glow {
+    background: radial-gradient(ellipse at top right, hsl(var(--hero-accent) / 0.18), transparent 60%);
+  }
+  .prose-lex {
+    @apply text-foreground leading-relaxed;
+  }
+  .prose-lex p { @apply my-2; }
+  .prose-lex strong { @apply font-semibold text-foreground; }
+  .prose-lex ul { @apply list-disc pl-5 my-2 space-y-1; }
+  .prose-lex ol { @apply list-decimal pl-5 my-2 space-y-1; }
+  .prose-lex code { @apply font-mono text-xs px-1 py-0.5 rounded bg-muted; }
 }
