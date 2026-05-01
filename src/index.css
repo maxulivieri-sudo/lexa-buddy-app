@@ -2,108 +2,170 @@
 @tailwind components;
 @tailwind utilities;
 
-/* LexAbilis – Editorial institutional design system
+/* LexAbilis Mobile – Premium app design system
+   Dark by default, optimized for native app feel.
    All colors HSL. */
 
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
 
 @layer base {
   :root {
-    /* Surfaces */
-    --background: 38 30% 96%;          /* warm paper */
-    --foreground: 220 25% 12%;         /* deep ink */
+    /* DARK FIRST — premium app */
+    --background: 220 30% 7%;             /* near-black with blue hint */
+    --foreground: 38 30% 96%;
 
+    --card: 220 25% 11%;
+    --card-foreground: 38 30% 96%;
+
+    --popover: 220 25% 11%;
+    --popover-foreground: 38 30% 96%;
+
+    /* Primary = warm gold (subtle premium accent) */
+    --primary: 38 60% 65%;
+    --primary-foreground: 220 30% 7%;
+
+    --secondary: 220 20% 16%;
+    --secondary-foreground: 38 30% 96%;
+
+    --muted: 220 18% 14%;
+    --muted-foreground: 220 10% 62%;
+
+    --accent: 38 60% 65%;
+    --accent-foreground: 220 30% 7%;
+    --accent-soft: 38 40% 18%;
+
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 38 30% 96%;
+
+    --border: 220 18% 18%;
+    --input: 220 18% 16%;
+    --ring: 38 60% 65%;
+
+    /* Status (dark-mode tuned) */
+    --status-vigente: 142 55% 55%;
+    --status-vigente-bg: 142 50% 14%;
+    --status-modificata: 32 85% 60%;
+    --status-modificata-bg: 32 60% 14%;
+    --status-attuazione: 215 75% 65%;
+    --status-attuazione-bg: 215 60% 16%;
+
+    /* Surfaces */
+    --surface-elevated: 220 22% 13%;
+    --hairline: 220 15% 22%;
+
+    --radius: 1rem;
+
+    /* Safe areas (iOS) */
+    --sat: env(safe-area-inset-top, 0px);
+    --sab: env(safe-area-inset-bottom, 0px);
+
+    /* Sidebar (kept, unused on mobile) */
+    --sidebar-background: 220 30% 7%;
+    --sidebar-foreground: 38 30% 96%;
+    --sidebar-primary: 38 60% 65%;
+    --sidebar-primary-foreground: 220 30% 7%;
+    --sidebar-accent: 220 20% 16%;
+    --sidebar-accent-foreground: 38 30% 96%;
+    --sidebar-border: 220 18% 18%;
+    --sidebar-ring: 38 60% 65%;
+  }
+
+  /* Light mode kept available but app defaults to dark */
+  .light {
+    --background: 38 30% 97%;
+    --foreground: 220 25% 12%;
     --card: 0 0% 100%;
     --card-foreground: 220 25% 12%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 220 25% 12%;
-
-    /* Primary = ink */
     --primary: 220 25% 12%;
     --primary-foreground: 38 30% 96%;
-
-    /* Secondary = warm cream */
-    --secondary: 38 25% 90%;
+    --secondary: 38 25% 92%;
     --secondary-foreground: 220 25% 12%;
-
-    --muted: 38 20% 92%;
+    --muted: 38 20% 94%;
     --muted-foreground: 220 12% 40%;
-
-    /* Accent = terracotta (sober gold-red) */
     --accent: 14 65% 48%;
     --accent-foreground: 38 30% 96%;
     --accent-soft: 14 65% 95%;
-
-    --destructive: 0 70% 45%;
-    --destructive-foreground: 38 30% 96%;
-
-    --border: 38 15% 85%;
-    --input: 38 15% 85%;
+    --border: 38 15% 87%;
+    --input: 38 15% 87%;
     --ring: 14 65% 48%;
-
-    /* Status colors (legenda) */
-    --status-vigente: 142 55% 35%;
-    --status-vigente-bg: 142 50% 94%;
-    --status-modificata: 32 85% 45%;
-    --status-modificata-bg: 32 80% 94%;
-    --status-attuazione: 215 75% 45%;
-    --status-attuazione-bg: 215 70% 95%;
-
-    /* Hero */
-    --hero-bg: 220 30% 10%;
-    --hero-fg: 38 30% 96%;
-    --hero-muted: 220 12% 65%;
-    --hero-accent: 38 60% 65%;          /* warm gold */
-
-    --radius: 0.625rem;
-
-    --sidebar-background: 38 30% 96%;
-    --sidebar-foreground: 220 25% 12%;
-    --sidebar-primary: 220 25% 12%;
-    --sidebar-primary-foreground: 38 30% 96%;
-    --sidebar-accent: 38 25% 90%;
-    --sidebar-accent-foreground: 220 25% 12%;
-    --sidebar-border: 38 15% 85%;
-    --sidebar-ring: 14 65% 48%;
+    --surface-elevated: 0 0% 100%;
+    --hairline: 38 15% 88%;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+  html, body, #root { height: 100%; }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, sans-serif;
     font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
   }
+
+  * { @apply border-border; }
+
   h1, h2, h3, .font-serif {
     font-family: 'Instrument Serif', Georgia, serif;
     font-weight: 400;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
   }
-  .font-mono {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
-  }
+  .font-mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  button, a { -webkit-tap-highlight-color: transparent; }
+  input, textarea { font-size: 16px; } /* prevent iOS zoom */
 }
 
 @layer utilities {
-  .hero-grid {
-    background-image:
-      linear-gradient(hsl(var(--hero-fg) / 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--hero-fg) / 0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
+  .safe-top    { padding-top: max(env(safe-area-inset-top), 0.5rem); }
+  .safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0.5rem); }
+  .pb-tab      { padding-bottom: calc(env(safe-area-inset-bottom) + 5rem); }
+
+  .glass {
+    background: hsl(var(--background) / 0.78);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
   }
-  .hero-glow {
-    background: radial-gradient(ellipse at top right, hsl(var(--hero-accent) / 0.18), transparent 60%);
+
+  .hairline { border-color: hsl(var(--hairline)); }
+
+  .surface {
+    background: hsl(var(--surface-elevated));
+    border: 1px solid hsl(var(--hairline));
   }
-  .prose-lex {
-    @apply text-foreground leading-relaxed;
+
+  .gold-text {
+    background: linear-gradient(135deg, hsl(38 70% 75%), hsl(38 60% 55%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
+
+  .grain::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image: radial-gradient(hsl(var(--foreground) / 0.04) 1px, transparent 1px);
+    background-size: 3px 3px;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  .prose-lex { @apply text-foreground leading-relaxed text-[15px]; }
   .prose-lex p { @apply my-2; }
   .prose-lex strong { @apply font-semibold text-foreground; }
   .prose-lex ul { @apply list-disc pl-5 my-2 space-y-1; }
   .prose-lex ol { @apply list-decimal pl-5 my-2 space-y-1; }
   .prose-lex code { @apply font-mono text-xs px-1 py-0.5 rounded bg-muted; }
+
+  /* Hide scrollbar (chips rows, etc.) */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up { animation: fadeUp 0.4s ease both; }
 }

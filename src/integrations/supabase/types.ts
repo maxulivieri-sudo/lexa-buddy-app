@@ -14,6 +14,35 @@ export type Database = {
   }
   public: {
     Tables: {
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          law_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          law_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          law_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favorites_law_id_fkey"
+            columns: ["law_id"]
+            isOneToOne: false
+            referencedRelation: "laws"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       law_summaries: {
         Row: {
           created_at: string
@@ -94,6 +123,39 @@ export type Database = {
           status?: string
           title?: string
           year?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          notifications_enabled: boolean
+          onboarding_completed: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          notifications_enabled?: boolean
+          onboarding_completed?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          notifications_enabled?: boolean
+          onboarding_completed?: boolean
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
