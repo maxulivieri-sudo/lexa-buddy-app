@@ -61,7 +61,7 @@ export default function LeggiPage() {
       )}
 
       {/* Area chips */}
-      <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-3 -mt-1">
+      <div className="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-3 pt-1">
         {AREAS.map((a) => (
           <button
             key={a.value}
