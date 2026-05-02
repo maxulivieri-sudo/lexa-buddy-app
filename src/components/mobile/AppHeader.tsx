@@ -32,8 +32,10 @@ export function AppHeader({ title, subtitle, left, right, large, transparent, cl
         <div className="w-10 flex items-center justify-end">{right}</div>
       </div>
       {large && (
-        <div className="px-5 pb-3 pt-1">
-          <h1 className="font-serif text-[34px] leading-[1.05] tracking-tight">{title}</h1>
+        <div className="px-5 pb-3 pt-2 overflow-visible">
+          <h1 className="font-serif text-[34px] leading-[1.15] tracking-tight pb-0.5 overflow-visible">
+            {title}
+          </h1>
           {subtitle && (
             <p className="text-sm text-muted-foreground mt-1.5">{subtitle}</p>
           )}

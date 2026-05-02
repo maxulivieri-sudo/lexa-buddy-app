@@ -1,55 +1,25 @@
+## Problema
 
-# LexAbilis AI – Archivio leggi sulla disabilità con assistente intelligente
+Nello screenshot il titolo **Lex*Abilis*** viene tagliato in alto: la "L" maiuscola e l'ascendente del corsivo "A" toccano/superano il bordo superiore del contenitore. Causa: in `AppHeader.tsx` (variante `large`) il titolo ha `text-[34px] leading-[1.05]` dentro un `<h1>` con `pt-1` — troppo stretto per un serif display come Instrument Serif, soprattutto con il glifo italico.
 
-Replica del sito lexabilis.it con un'estensione AI: oltre a sfogliare le 32 leggi italiane sulla disabilità, l'utente può fare domande in linguaggio naturale ("Quali aiuti spettano a un caregiver convivente con ISEE 12.000?") e ricevere risposte sintetiche con citazione delle leggi pertinenti.
+## Soluzione
 
-## Cosa costruiamo
+Modifiche mirate, niente refactor.
 
-### 1. Homepage – Archivio leggi (clone funzionale)
-- Header con logo "LexAbilis", sottotitolo "Repubblica Italiana · Normativa Vigente" e tre contatori (numero leggi, numero aree, anno aggiornamento).
-- Strip "Fonti ufficiali" con badge cliccabili (normattiva.it, gazzettaufficiale.it, parlamento.it, eur-lex.europa.eu).
-- Due tab: **Archivio leggi** e **Novità**.
-- Barra di ricerca testuale + filtri per area tematica (Tutti, Lavoro, Salute, Accessibilità, Welfare, Istruzione, Internazionale, Previdenza, Trasporti).
-- Legenda di stato: Vigente (verde), Parz. modificata (arancio), In attuazione (blu).
-- Griglia di card per ogni legge con: identificativo (es. "D.Lgs. 62/2024"), anno, stato, descrizione breve, descrizione estesa, riquadro "Nota operativa", tag aree, e bottoni link a Testo ufficiale / Gazzetta Uff. / PDF.
+### 1. `src/components/mobile/AppHeader.tsx`
+- Aumentare il line-height del titolo grande da `leading-[1.05]` a `leading-[1.15]` per dare respiro ad ascendenti/discendenti del serif.
+- Sostituire `pt-1` con `pt-2` sul wrapper della sezione `large` per evitare contatto con il bordo del safe-area.
+- Aggiungere `pb-0.5` al titolo per evitare clipping in basso (corsivo "s" di *Abilis*).
+- Aggiungere `overflow-visible` al container per sicurezza (nessun clip da bordi arrotondati o blur).
 
-### 2. Estensioni AI (la novità rispetto al sito originale)
+### 2. `src/pages/LeggiPage.tsx`
+- Aggiungere un piccolo margine superiore alla riga dei chip area (`pt-1`) così non si "appiccicano" al subtitle dopo l'aumento di altezza header.
+- (Opzionale) mostrare il bottone "X" per resettare il filtro area quando diverso da `tutti`, ma fuori scope di questo fix se preferisci minimal.
 
-**a) Ricerca semantica**
-La barra di ricerca non fa solo match testuale: se l'utente scrive "lavoro per persone sorde" trova anche leggi che non contengono quelle parole esatte ma trattano il tema.
+### Nessuna modifica
+- Tab bar, palette, struttura dati: invariate.
+- Nessun cambio al sistema di colori o ai font.
 
-**b) "Spiegamelo semplice" su ogni card**
-Pulsante che apre un pannello con riassunto in linguaggio chiaro della legge (cosa cambia, chi ne beneficia, quando entra in vigore, cosa fare in pratica). Generato al momento e poi messo in cache.
+## Risultato atteso
 
-**c) Assistente "Chiedi a LexAbilis"**
-Pulsante flottante in basso a destra che apre un chat panel. L'utente fa domande sui diritti delle persone con disabilità; l'assistente risponde basandosi **solo** sulle leggi presenti in archivio e cita le card di riferimento (cliccabili per saltare alla legge). Risponde "non lo so / non è coperto dall'archivio" quando appropriato, per evitare risposte inventate su materia legale.
-
-### 3. Pagina Novità
-Lista cronologica delle leggi più recenti o in iter, con la stessa struttura a card ma ordinata per data.
-
-## Dati
-Per partire estraggo io l'elenco completo dal sito lexabilis.it (tutte e 32 le leggi con le loro aree, stato, descrizioni, note operative e link ufficiali) e li inserisco come seed nel database. Resta facile aggiungerne/modificarne in seguito.
-
-## Design – ispirato ma rivisitato
-
-Header e hero in tono istituzionale scuro, ma più contemporaneo dell'originale (meno "documentale", più editoriale). Sotto la fold passiamo a un'area chiara per la lista leggi, per massima leggibilità.
-
-Per scegliere insieme la direzione visiva ti farò vedere proposte di palette, tipografia e layout subito dopo l'approvazione del piano (se preferisci posso anche partire con una proposta mia).
-
-## Dettagli tecnici
-
-- **Stack**: React + Vite + Tailwind + shadcn/ui (già nel progetto).
-- **Backend**: Lovable Cloud (Supabase) per database `laws` (numero, anno, titolo, descrizione_breve, descrizione_estesa, nota_operativa, stato, aree[], link_normattiva, link_gazzetta, link_pdf), tabella `law_summaries` per la cache dei riassunti AI, tabella `chat_sessions`/`chat_messages` per l'assistente.
-- **AI**: Lovable AI Gateway con `google/gemini-3-flash-preview` (default) tramite edge functions:
-  - `search-laws`: ricerca semantica (rerank dei risultati).
-  - `summarize-law`: riassunto "spiegamelo semplice" di una singola legge, con cache.
-  - `ask-lexabilis`: assistente chat in streaming con contesto = elenco leggi pertinenti recuperate via search-laws (RAG), risposte con citazioni.
-- **Dati**: scraping una tantum di lexabilis.it per popolare la tabella `laws` come seed migration.
-- **Disclaimer**: nota in footer "Strumento informativo, non sostituisce consulenza legale".
-
-## Cosa NON facciamo in questa prima versione
-- Niente account utente / login (può arrivare dopo se vuoi salvare preferiti o cronologia chat per utente).
-- Niente pannello admin con UI: per modificare leggi si aggiorna direttamente la tabella su Lovable Cloud.
-- Niente notifiche su nuove normative.
-
-Prossimo passo dopo l'approvazione: ti mostro 3-4 opzioni di palette/tipografia/layout, poi partiamo con setup database, scraping dati e UI.
+Il titolo "Lex*Abilis*" sarà completamente visibile senza clipping su tutti i dispositivi iOS (incluso il viewport corrente 393×697), mantenendo lo stile editoriale premium.
