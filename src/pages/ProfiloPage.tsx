@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { Bell, LogOut, ChevronRight, User as UserIcon, Heart, Info, ExternalLink } from "lucide-react";
+import { Bell, LogOut, ChevronRight, User as UserIcon, Heart, Info, ExternalLink, type LucideIcon } from "lucide-react";
 import { AppHeader } from "@/components/mobile/AppHeader";
+import { IconPill, type PillTone } from "@/components/mobile/IconPill";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { Switch } from "@/components/ui/switch";
@@ -45,15 +46,22 @@ export default function ProfiloPage() {
     <div>
       <AppHeader large title="Profilo" />
 
-      {/* User card */}
+      {/* User card with playful gradient */}
       <div className="px-4 mb-5">
-        <div className="surface rounded-2xl p-4 flex items-center gap-4">
-          <div className="h-14 w-14 rounded-full bg-primary/15 text-primary grid place-items-center font-serif text-2xl">
+        <div className="relative surface rounded-2xl p-4 flex items-center gap-4 overflow-hidden">
+          <span
+            className="absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-30 blur-2xl pointer-events-none"
+            style={{ background: "linear-gradient(135deg, hsl(var(--c-violet)), hsl(var(--c-pink)))" }}
+          />
+          <div
+            className="relative h-14 w-14 rounded-2xl grid place-items-center font-serif text-2xl text-background shadow-lg"
+            style={{ background: "linear-gradient(135deg, hsl(var(--c-violet)), hsl(var(--c-cyan)))" }}
+          >
             {profile?.avatar_url ? (
-              <img src={profile.avatar_url} alt="" className="h-full w-full rounded-full object-cover" />
+              <img src={profile.avatar_url} alt="" className="h-full w-full rounded-2xl object-cover" />
             ) : initials}
           </div>
-          <div className="flex-1 min-w-0">
+          <div className="relative flex-1 min-w-0">
             <div className="font-medium truncate">{profile?.display_name ?? "Utente"}</div>
             <div className="text-xs text-muted-foreground truncate">{user.email}</div>
           </div>
@@ -61,7 +69,7 @@ export default function ProfiloPage() {
       </div>
 
       <Section title="Preferenze">
-        <Row icon={Bell} label="Notifiche aggiornamenti">
+        <Row icon={Bell} tone="cyan" label="Notifiche aggiornamenti">
           <Switch
             checked={profile?.notifications_enabled ?? true}
             onCheckedChange={toggleNotif}
@@ -70,12 +78,12 @@ export default function ProfiloPage() {
       </Section>
 
       <Section title="Attività">
-        <NavRow icon={Heart} label="Le mie leggi salvate" onClick={() => nav("/preferiti")} />
+        <NavRow icon={Heart} tone="pink" label="Le mie leggi salvate" onClick={() => nav("/preferiti")} />
       </Section>
 
       <Section title="Informazioni">
-        <NavRow icon={Info} label="Su LexAbilis" onClick={() => nav("/about")} />
-        <NavRow icon={ExternalLink} label="Sito web originale" onClick={() => window.open("https://lexabilis.it", "_blank")} />
+        <NavRow icon={Info} tone="violet" label="Su LexAbilis" onClick={() => nav("/about")} />
+        <NavRow icon={ExternalLink} tone="amber" label="Sito web originale" onClick={() => window.open("https://lexabilis.it", "_blank")} />
       </Section>
 
       <div className="px-4 mt-6 mb-10">
@@ -104,20 +112,20 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function Row({ icon: Icon, label, children }: { icon: React.ComponentType<{ className?: string }>; label: string; children?: React.ReactNode }) {
+function Row({ icon, tone = "gold", label, children }: { icon: LucideIcon; tone?: PillTone; label: string; children?: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3.5">
-      <Icon className="h-[18px] w-[18px] text-muted-foreground" />
+    <div className="flex items-center gap-3 px-4 py-3">
+      <IconPill icon={icon} tone={tone} size="sm" />
       <span className="flex-1 text-[15px]">{label}</span>
       {children}
     </div>
   );
 }
 
-function NavRow({ icon: Icon, label, onClick }: { icon: React.ComponentType<{ className?: string }>; label: string; onClick: () => void }) {
+function NavRow({ icon, tone = "gold", label, onClick }: { icon: LucideIcon; tone?: PillTone; label: string; onClick: () => void }) {
   return (
-    <button onClick={onClick} className="w-full flex items-center gap-3 px-4 py-3.5 active:bg-muted/40 transition">
-      <Icon className="h-[18px] w-[18px] text-muted-foreground" />
+    <button onClick={onClick} className="w-full flex items-center gap-3 px-4 py-3 active:bg-muted/40 transition">
+      <IconPill icon={icon} tone={tone} size="sm" />
       <span className="flex-1 text-left text-[15px]">{label}</span>
       <ChevronRight className="h-4 w-4 text-muted-foreground/60" />
     </button>
