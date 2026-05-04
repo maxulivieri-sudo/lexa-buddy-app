@@ -1,14 +1,26 @@
 import { Link } from "react-router-dom";
-import { ChevronRight, Heart } from "lucide-react";
+import { ChevronRight, Heart, Scale, Briefcase, GraduationCap, HeartPulse, Users, Accessibility, Sparkles } from "lucide-react";
 import type { Law } from "@/components/lex/types";
 import { AREA_LABEL } from "@/components/lex/types";
 import { cn } from "@/lib/utils";
+import { IconPill, toneForArea } from "@/components/mobile/IconPill";
 
 const STATUS_CLASSES: Record<string, string> = {
   Vigente: "bg-status-vigente-bg text-status-vigente",
   "Parz. modificata": "bg-status-modificata-bg text-status-modificata",
   "In attuazione": "bg-status-attuazione-bg text-status-attuazione",
 };
+
+function iconForArea(area?: string) {
+  const key = (area ?? "").toLowerCase();
+  if (/lavoro|occupaz/.test(key)) return Briefcase;
+  if (/scuola|istruz|educaz/.test(key)) return GraduationCap;
+  if (/sanit|salute|ssn/.test(key)) return HeartPulse;
+  if (/famigl|caregiver/.test(key)) return Users;
+  if (/access|barrier|mobilit/.test(key)) return Accessibility;
+  if (/diritti|civil|inclusi/.test(key)) return Sparkles;
+  return Scale;
+}
 
 interface Props {
   law: Law;
@@ -17,13 +29,19 @@ interface Props {
 }
 
 export function LawListItem({ law, isFavorite, onToggleFavorite }: Props) {
+  const primaryArea = law.areas[0];
+  const Icon = iconForArea(primaryArea);
+  const tone = toneForArea(primaryArea);
+
   return (
     <Link
       to={`/legge/${law.id}`}
-      className="group flex items-stretch gap-3 px-4 py-3.5 active:bg-muted/40 transition-colors border-b hairline"
+      className="group flex items-start gap-3 px-4 py-3.5 active:bg-muted/40 transition-colors border-b hairline"
     >
+      <IconPill icon={Icon} tone={tone} size="md" className="mt-0.5" />
+
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1.5">
+        <div className="flex items-center gap-2 mb-1.5 flex-wrap">
           <span className="font-mono text-[10.5px] text-muted-foreground tracking-wide uppercase">
             {law.identifier}
           </span>
@@ -53,7 +71,7 @@ export function LawListItem({ law, isFavorite, onToggleFavorite }: Props) {
         )}
       </div>
 
-      <div className="flex flex-col items-center justify-between py-1">
+      <div className="flex flex-col items-center justify-between py-1 self-stretch">
         {onToggleFavorite ? (
           <button
             onClick={(e) => { e.preventDefault(); onToggleFavorite(law.id); }}
@@ -61,7 +79,12 @@ export function LawListItem({ law, isFavorite, onToggleFavorite }: Props) {
             aria-label={isFavorite ? "Rimuovi dai preferiti" : "Aggiungi ai preferiti"}
           >
             <Heart
-              className={cn("h-[18px] w-[18px] transition-colors", isFavorite ? "fill-primary text-primary" : "text-muted-foreground")}
+              className={cn(
+                "h-[18px] w-[18px] transition-all",
+                isFavorite
+                  ? "fill-[hsl(var(--c-pink))] text-[hsl(var(--c-pink))] scale-110"
+                  : "text-muted-foreground"
+              )}
             />
           </button>
         ) : <span />}
