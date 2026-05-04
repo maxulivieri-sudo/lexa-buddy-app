@@ -2,13 +2,21 @@ import { NavLink } from "react-router-dom";
 import { BookMarked, Bell, Sparkles, Heart, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const tabs = [
+type Tab = {
+  to: string;
+  label: string;
+  icon: typeof BookMarked;
+  color: "violet" | "cyan" | "amber" | "pink" | "mint";
+  primary?: boolean;
+};
+
+const tabs: Tab[] = [
   { to: "/",          label: "Leggi",      icon: BookMarked, color: "violet" },
   { to: "/novita",    label: "Novità",     icon: Bell,       color: "cyan" },
   { to: "/chat",      label: "Assistente", icon: Sparkles,   color: "amber", primary: true },
   { to: "/preferiti", label: "Preferiti",  icon: Heart,      color: "pink" },
   { to: "/profilo",   label: "Profilo",    icon: User,       color: "mint" },
-] as const;
+];
 
 const COLOR_VAR: Record<string, string> = {
   violet: "var(--c-violet)",
