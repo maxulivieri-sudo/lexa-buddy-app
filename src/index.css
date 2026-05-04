@@ -34,6 +34,20 @@
     --accent-foreground: 220 30% 7%;
     --accent-soft: 38 40% 18%;
 
+    /* Playful accent palette — duotone icon pills & highlights */
+    --c-violet: 258 89% 70%;
+    --c-violet-bg: 258 60% 18%;
+    --c-cyan: 189 85% 60%;
+    --c-cyan-bg: 189 60% 16%;
+    --c-pink: 330 85% 70%;
+    --c-pink-bg: 330 55% 18%;
+    --c-mint: 152 70% 60%;
+    --c-mint-bg: 152 50% 14%;
+    --c-amber: 38 90% 65%;
+    --c-amber-bg: 38 60% 16%;
+    --c-coral: 14 90% 65%;
+    --c-coral-bg: 14 65% 16%;
+
     --destructive: 0 65% 55%;
     --destructive-foreground: 38 30% 96%;
 
@@ -141,6 +155,22 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  .playful-text {
+    background: linear-gradient(120deg, hsl(var(--c-violet)) 0%, hsl(var(--c-cyan)) 50%, hsl(var(--c-amber)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Glow blob for backgrounds */
+  .blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(60px);
+    opacity: 0.45;
+    pointer-events: none;
   }
 
   .grain::before {
